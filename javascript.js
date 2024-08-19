@@ -8,7 +8,7 @@ console.log;
 
 function getCPUChoice (){
     result = getRandomInt(1,4);
-    log("random integer = " + result);
+    //log("random integer = " + result);
     if (result === 1) {
         // log("Rock");
         return "Rock";
@@ -21,7 +21,7 @@ function getCPUChoice (){
     }};
 
 let computerChoice = getCPUChoice();
-log("Computer chooses " + computerChoice);
+//log("Computer chooses " + computerChoice);
 
 function getHumanChoice() {
     return prompt("Write Rock, Paper, or Scissors", "");
@@ -30,6 +30,7 @@ let humanInitial = getHumanChoice();
 // log(humanInitial);
 let humanChoice = humanInitial[0].toUpperCase() + humanInitial.slice(1).toLowerCase();
 log("You chose " + humanChoice);
+log("The Computer chose " + computerChoice);
 
 function getRoundResult(){
     if (computerChoice === humanChoice){
@@ -62,10 +63,10 @@ log("Player Score: " + humanScore);
 
 function newRound(){
     computerChoice = getCPUChoice();
-    log("Computer chooses " + computerChoice);
     humanInitial = getHumanChoice();
     humanChoice = humanInitial[0].toUpperCase() + humanInitial.slice(1).toLowerCase();
     log("You chose " + humanChoice);
+    log("The Computer chose " + computerChoice);
     roundResult = getRoundResult();
     incrementScore();
     log(roundResult);
