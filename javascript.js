@@ -20,17 +20,14 @@ function getCPUChoice (){
         return "Scissors";
     }};
 
-let computerChoice = getCPUChoice();
-//log("Computer chooses " + computerChoice);
+let computerChoice;
 
 function getHumanChoice() {
     return prompt("Write Rock, Paper, or Scissors", "");
 };
-let humanInitial = getHumanChoice();
-// log(humanInitial);
-let humanChoice = humanInitial[0].toUpperCase() + humanInitial.slice(1).toLowerCase();
-log("You chose " + humanChoice);
-log("The Computer chose " + computerChoice);
+
+let humanInitial;
+let humanChoice;
 
 function getRoundResult(){
     if (computerChoice === humanChoice){
@@ -43,8 +40,7 @@ function getRoundResult(){
         return "You Lose!";
     }
 }
-let roundResult = getRoundResult();
-log(roundResult);
+let roundResult;
 
 let computerScore = 0;
 let humanScore = 0;
@@ -57,11 +53,8 @@ function incrementScore(){
         return;
     }
 };
-incrementScore();
-log("CPU Score: " + computerScore);
-log("Player Score: " + humanScore);
 
-function newRound(){
+function playRound(){
     computerChoice = getCPUChoice();
     humanInitial = getHumanChoice();
     humanChoice = humanInitial[0].toUpperCase() + humanInitial.slice(1).toLowerCase();
@@ -70,6 +63,24 @@ function newRound(){
     roundResult = getRoundResult();
     incrementScore();
     log(roundResult);
-    log("CPU Score: " + computerScore);
-    log("Player Score: " + humanScore);
+    log("CPU Score: " + computerScore + "/5");
+    log("Player Score: " + humanScore + "/5");
+};
+
+function getWinner(){
+    if (computerScore === 3){
+        return ("You lost the Game! Try again?");
+    } else if (humanScore === 3){
+        return ("You're the weiner! Play again?");
+    } else {
+        return "";
+    }
+};
+let Winner;
+
+function playGame(){
+    do {
+        playRound();
+        Winner = getWinner();
+    } while (Winner === "");
 };
