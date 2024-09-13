@@ -1,10 +1,11 @@
+const log =
+console.log;
+
 function getRandomInt(min, max) {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 };
-const log =
-console.log;
 
 function getCPUChoice (){
     result = getRandomInt(1,4);
@@ -22,12 +23,26 @@ function getCPUChoice (){
 
 let computerChoice;
 
-function getHumanChoice() {
-    return prompt("Write Rock, Paper, or Scissors", "");
-};
-
-let humanInitial;
+const imgContainer = document.querySelector(".imgContainer");
 let humanChoice;
+
+imgContainer.addEventListener("click", (event)=>{
+        let target = event.target;
+        switch(target.id){
+            case "Rock":
+                humanChoice = "Rock";
+                console.log(humanChoice);
+                break;
+            case "Paper":
+                humanChoice = "Paper";
+                console.log(humanChoice);
+                break;
+            case "Scissors":
+                humanChoice = "Scissors";
+                console.log(humanChoice);
+                break;
+        };
+    });
 
 function getRoundResult(){
     if (computerChoice === humanChoice){
@@ -54,19 +69,6 @@ function incrementScore(){
     }
 };
 
-function playRound(){
-    computerChoice = getCPUChoice();
-    humanInitial = getHumanChoice();
-    humanChoice = humanInitial[0].toUpperCase() + humanInitial.slice(1).toLowerCase();
-    log("You chose " + humanChoice);
-    log("The Computer chose " + computerChoice);
-    roundResult = getRoundResult();
-    incrementScore();
-    log(roundResult);
-    log("CPU Score: " + computerScore + "/5");
-    log("Player Score: " + humanScore + "/5");
-};
-
 function getWinner(){
     if (computerScore === 3){
         return ("You lost the Game! Try again?");
@@ -78,9 +80,16 @@ function getWinner(){
 };
 let Winner;
 
-function playGame(){
-    do {
-        playRound();
-        Winner = getWinner();
-    } while (Winner === "");
+function playRound(){
+    computerChoice = getCPUChoice();
+    log("You chose " + humanChoice);
+    log("The Computer chose " + computerChoice);
+    roundResult = getRoundResult();
+    incrementScore();
+    log(roundResult);
+    log("CPU Score: " + computerScore + "/5");
+    log("Player Score: " + humanScore + "/5");
+    Winner = getWinner();
 };
+
+imgContainer.addEventListener("click", playRound);

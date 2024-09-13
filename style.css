@@ -1,0 +1,10 @@
+.imgContainer{
+    display: flex;
+    justify-content: space-around;
+}
+.playerChoice{
+    height: 200px;
+    width: auto;
+    cursor: pointer;
+    background-color: white;
+}
