@@ -1,6 +1,20 @@
 const log =
 console.log;
 
+let computerChoice;
+let humanChoice;
+let roundResult;
+let computerScore = 0;
+let humanScore = 0;
+let Winner;
+const roundInfo = document.querySelector(".roundInfo");
+const Choices = document.createElement("div");
+const humanChoiceDiv = document.createElement("div");
+const computerChoiceDiv = document.createElement("div");
+const roundResultDiv = document.createElement("div");
+const displayScoreDiv = document.createElement("div");
+const gameWinner = document.createElement("p");
+
 function getRandomInt(min, max) {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
@@ -21,29 +35,38 @@ function getCPUChoice (){
         return "Scissors";
     }};
 
-let computerChoice;
-
+//getHumanChoice
 const imgContainer = document.querySelector(".imgContainer");
-let humanChoice;
-
 imgContainer.addEventListener("click", (event)=>{
         let target = event.target;
         switch(target.id){
             case "Rock":
                 humanChoice = "Rock";
-                console.log(humanChoice);
                 break;
             case "Paper":
                 humanChoice = "Paper";
-                console.log(humanChoice);
                 break;
             case "Scissors":
                 humanChoice = "Scissors";
-                console.log(humanChoice);
                 break;
         };
     });
 
+function displayChoices(){
+    humanChoiceDiv.textContent = "You Chose " + humanChoice + "!";
+    computerChoiceDiv.textContent = "The Computer Chose " + computerChoice + "!";
+    Choices.append(humanChoiceDiv, computerChoiceDiv);
+    roundInfo.appendChild(Choices);
+}
+
+function clearChoices(){
+    if (roundResult != undefined){
+        Choices.removeChild(humanChoiceDiv);
+        Choices.removeChild(computerChoiceDiv);
+    };
+};
+
+//roundResult
 function getRoundResult(){
     if (computerChoice === humanChoice){
         return "It's a Tie!";
@@ -55,10 +78,18 @@ function getRoundResult(){
         return "You Lose!";
     }
 }
-let roundResult;
 
-let computerScore = 0;
-let humanScore = 0;
+function displayRoundResult(){
+    roundResultDiv.textContent = roundResult;
+    roundInfo.appendChild(roundResultDiv);
+}
+
+function clearRoundResult(){
+    if (roundResult != undefined){
+        roundInfo.removeChild(roundResultDiv);
+    };
+};
+
 function incrementScore(){
     if (roundResult === "You Lose!"){
         computerScore++;
@@ -69,27 +100,59 @@ function incrementScore(){
     }
 };
 
+function displayScore(){
+    displayScoreDiv.textContent = "Computer Score:" + computerScore + "/5   Human Score:" + humanScore + "/5";
+    roundInfo.appendChild(displayScoreDiv);
+}
+
+function clearScore(){
+    if (roundResult != undefined){
+        roundInfo.removeChild(displayScoreDiv);
+    };
+}
 function getWinner(){
     if (computerScore === 3){
         return ("You lost the Game! Try again?");
     } else if (humanScore === 3){
         return ("You're the weiner! Play again?");
     } else {
-        return "";
+        return undefined;
     }
 };
-let Winner;
+
+function displayWinner(){
+    gameWinner.textContent = Winner;
+    if (computerScore === 3){
+        gameWinner.setAttribute("style", "color:red; font-weight:700")
+    } else if (humanScore ===3){
+        gameWinner.setAttribute("style","color:green; font-weight:700")
+    };
+    roundInfo.appendChild(gameWinner);
+}
+
+function clearWinner(){
+    if (Winner != undefined){
+        roundInfo.removeChild(gameWinner)
+    };
+};
 
 function playRound(){
+    clearChoices();
+    clearRoundResult();
+    clearScore();
+    clearWinner();
     computerChoice = getCPUChoice();
-    log("You chose " + humanChoice);
-    log("The Computer chose " + computerChoice);
+    displayChoices();
     roundResult = getRoundResult();
+    displayRoundResult();
     incrementScore();
-    log(roundResult);
-    log("CPU Score: " + computerScore + "/5");
-    log("Player Score: " + humanScore + "/5");
+    displayScore();
     Winner = getWinner();
+    if (Winner != undefined){
+        displayWinner();
+        computerScore = 0;
+        humanScore = 0;
+    };
 };
 
 imgContainer.addEventListener("click", playRound);
